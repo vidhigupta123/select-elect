@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C89T4K7NVH"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -68,6 +68,25 @@
                     </select>
                 </div>
             </div>
+            
+            <!-- Additional Filters -->
+<div class="bg-gray-50 p-4 rounded mt-4 mb-4">
+    <h3 class="font-semibold mb-2">Additional Filters:</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex items-center">
+            <input type="checkbox" id="noExams" class="mr-2">
+            <label for="noExams">No Exams/Mid-Terms</label>
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="noCP" class="mr-2">
+            <label for="noCP">No Class Participation</label>
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="noGroup" class="mr-2">
+            <label for="noGroup">No Group Projects</label>
+        </div>
+    </div>
+</div>
 
             <!-- Course Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
@@ -84,6 +103,8 @@
                     </select>
                 </div>
             </div>
+            
+            
 
             <!-- Comparison Table -->
             <div class="overflow-x-auto mt-6">
@@ -562,7 +583,62 @@ function filterCourses() {
     if (courses.some(([code]) => code === selected1)) course1Select.value = selected1;
     if (courses.some(([code]) => code === selected2)) course2Select.value = selected2;
 }
+function filterCourses() {
+    const concentration = document.getElementById('concentrationSelect').value;
+    const noExams = document.getElementById('noExams').checked;
+    const noCP = document.getElementById('noCP').checked;
+    const noGroup = document.getElementById('noGroup').checked;
+    
+    const courses = Object.entries(courseData).filter(([_, course]) => {
+        // Check concentration filter
+        if (concentration && !course.majors.includes(concentration)) return false;
+        
+        // Check evaluation criteria filters
+        const evalComponents = course.evaluation.map(e => e.component.toLowerCase());
+        
+        if (noExams && evalComponents.some(e => 
+            e.includes('exam') || e.includes('mid-term') || e.includes('midterm') || 
+            e.includes('end-term') || e.includes('final'))) return false;
+            
+        if (noCP && evalComponents.some(e => 
+            e.includes('participation') || e.includes('cp'))) return false;
+            
+        if (noGroup && evalComponents.some(e => 
+            e.includes('group') || e.includes('team'))) return false;
+        
+        return true;
+    });
+    
+    // Update dropdowns with filtered courses
+    const course1Select = document.getElementById('course1');
+    const course2Select = document.getElementById('course2');
+    
+    // Preserve selected values
+    const selected1 = course1Select.value;
+    const selected2 = course2Select.value;
+    
+    // Clear and repopulate dropdowns
+    course1Select.innerHTML = '<option value="">Select first course</option>';
+    course2Select.innerHTML = '<option value="">Select second course</option>';
+    
+    courses.forEach(([code, course]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = `${course.name} (${code})`;
+        
+        course1Select.appendChild(option.cloneNode(true));
+        course2Select.appendChild(option);
+    });
+    
+    // Restore selections if still valid
+    if (courses.some(([code]) => code === selected1)) course1Select.value = selected1;
+    if (courses.some(([code]) => code === selected2)) course2Select.value = selected2;
+}
 
+// Add event listeners for the new checkboxes
+document.getElementById('noExams').addEventListener('change', filterCourses);
+document.getElementById('noCP').addEventListener('change', filterCourses);
+document.getElementById('noGroup').addEventListener('change', filterCourses);
 function updateComparison(index) {
     const course = document.getElementById(`course${index}`).value;
     const data = courseData[course];
