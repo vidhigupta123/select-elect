@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C89T4K7NVH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C89T4K7NVH');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISB Elective Selection Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold">Elective Selection Dashboard</h1>
+        <nav class="mt-2">
+            <a href="#" class="mr-4">Home</a>
+            <a href="#" class="mr-4">My Courses</a>
+            <a href="#" class="mr-4">Explore Electives</a>
+            <a href="#" class="mr-4">Career Paths</a>
+            <a href="#" class="mr-4">Help</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto mt-8 p-4">
+        <section class="mt-8 bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-semibold mb-4">Course Comparison Tool</h2>
+            
+            <!-- Selection Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <!-- Campus & Term -->
+                <div>
+                    <label for="campusSelect" class="block mb-2">Campus</label>
+                    <select id="campusSelect" class="w-full p-2 border rounded mb-4">
+                        <option value="">Choose a campus</option>
+                        <option value="HYD">Hyderabad</option>
+                        <option value="MOH" selected>Mohali</option>
+                    </select>
+
+                    <label for="termSelect" class="block mb-2">Term</label>
+                    <select id="termSelect" class="w-full p-2 border rounded">
+                        <option value="">Select a term</option>
+                        <option value="6" selected>Term 6</option>
+                    </select>
+                </div>
+
+                <!-- Concentration Area -->
+                <div>
+                    <label for="concentrationSelect" class="block mb-2">Concentration Area</label>
+                    <select id="concentrationSelect" class="w-full p-2 border rounded">
+                        <option value="">All Areas</option>
+                        <option value="MKTG">Marketing</option>
+                        <option value="FINC">Finance</option>
+                        <option value="OPNS">Operations</option>
+                        <option value="STGY">Strategy</option>
+                        <option value="ENTR">Entrepreneurship</option>
+                        <option value="INTM">Information Technology & Management</option>
+                        <option value="MANF">Manufacturing</option>
+                        <option value="STLD">Strategy & Leadership</option>
+                        <option value="HCMG">Healthcare Management</option>
+                        <option value="PBPL">Public Policy</option>
+                        <option value="INSR">Insurance & Risk Management</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Additional Filters -->
+<div class="bg-gray-50 p-4 rounded mt-4 mb-4">
+    <h3 class="font-semibold mb-2">Additional Filters:</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex items-center">
+            <input type="checkbox" id="noExams" class="mr-2">
+            <label for="noExams">No Exams/Mid-Terms</label>
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="noCP" class="mr-2">
+            <label for="noCP">No Class Participation</label>
+        </div>
+        <div class="flex items-center">
+            <input type="checkbox" id="noGroup" class="mr-2">
+            <label for="noGroup">No Group Projects</label>
+        </div>
+    </div>
+</div>
+
+            <!-- Course Selection -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                <div>
+                    <label for="course1" class="block mb-2">Course 1</label>
+                    <select id="course1" class="w-full p-2 border rounded">
+                        <option value="">Select first course</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="course2" class="block mb-2">Course 2</label>
+                    <select id="course2" class="w-full p-2 border rounded">
+                        <option value="">Select second course</option>
+                    </select>
+                </div>
+            </div>
+            
+            
+
+            <!-- Comparison Table -->
+            <div class="overflow-x-auto mt-6">
+                <table class="w-full border-collapse border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border border-gray-300 p-2">Comparison Criteria</th>
+                            <th class="border border-gray-300 p-2">Course 1</th>
+                            <th class="border border-gray-300 p-2">Course 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Course Summary</td>
+                            <td class="border border-gray-300 p-2" id="summary1">Select a course</td>
+                            <td class="border border-gray-300 p-2" id="summary2">Select a course</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Major/s Tagged</td>
+                            <td class="border border-gray-300 p-2" id="majors1">-</td>
+                            <td class="border border-gray-300 p-2" id="majors2">-</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Evaluation Components</td>
+                            <td class="border border-gray-300 p-2">
+                                <ul class="list-disc pl-4" id="evaluation1">-</ul>
+                            </td>
+                            <td class="border border-gray-300 p-2">
+                                <ul class="list-disc pl-4" id="evaluation2">-</ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Study Group Requirements</td>
+                            <td class="border border-gray-300 p-2" id="group1">-</td>
+                            <td class="border border-gray-300 p-2" id="group2">-</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Attendance Policy</td>
+                            <td class="border border-gray-300 p-2" id="attendance1">-</td>
+                            <td class="border border-gray-300 p-2" id="attendance2">-</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Faculty</td>
+                            <td class="border border-gray-300 p-2" id="faculty1">-</td>
+                            <td class="border border-gray-300 p-2" id="faculty2">-</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-300 p-2 font-semibold">Pre-requisites</td>
+                            <td class="border border-gray-300 p-2" id="prerequisites1">-</td>
+                            <td class="border border-gray-300 p-2" id="prerequisites2">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 mt-8">
+        <div class="container mx-auto">
+            <p>&copy; 2024 ISB Elective Selection Dashboard. All rights reserved.</p>
+        </div>
+    </footer>
+
+<script>
+// Complete course data
+const courseData = {
+  
+  
+    "BBMK": {
+        name: "Business to Business Marketing",
+        summary: "A specialized course focusing on B2B market management, helping students understand how supplier firms create and deliver value to other businesses, governments, and institutional customers.",
+        faculty: "D.V.R. Seshadri",
+        majors: ["MKTG"],
+        prerequisites: "None",
+        group_requirements: "Maximum 5 students per group, no constraints in formation, no cross-section groups",
+        attendance: "Standard ISB policy with grade penalties for missing sessions",
+        evaluation: [
+            {component: "Class Participation", weight: "21%"},
+            {component: "Individual In-class Quizzes (Best 7 of 8)", weight: "48%"},
+            {component: "Mandatory Take-home Group Assignment", weight: "21%"},
+            {component: "Mandatory In-class Group Assignment", weight: "10%"}
+        ]
+    },
+    "BEDO": {
+        name: "Business Experiments for Data-Driven Organizations",
+        summary: "Focuses on creating business value from data assets through causal inference methods, digital experiments, and A/B testing.",
+        faculty: "Yael Inbar, Sagit Bar-Gill",
+        majors: ["INTM", "OPNS"],
+        prerequisites: "None",
+        group_requirements: "Groups required for project work and activities",
+        attendance: "Standard ISB policy with exceptions only for medical emergencies",
+        evaluation: [
+            {component: "Attendance & Participation", weight: "20%"},
+            {component: "Mini-Assignments (2)", weight: "30%"},
+            {component: "Group Project", weight: "30%"},
+            {component: "In-Class Group Activities", weight: "20%"}
+        ]
+    },
+    "BPEX": {
+        name: "Business Process Excellence",
+        summary: "Focuses on Lean and Six Sigma principles integrated with AI, digital transformation, and Industry 4.0 technologies.",
+        faculty: "Aditya Jain, Ram Ganeshan",
+        majors: ["OPMT", "MANF", "STLD", "HCMG"],
+        prerequisites: "None",
+        group_requirements: "Group size TBD after final bidding, Random composition",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class Participation", weight: "20%"},
+            {component: "Assignment/Case Submissions", weight: "10%"},
+            {component: "Case presentations", weight: "10%"},
+            {component: "Group Project", weight: "30%"},
+            {component: "Exams", weight: "30%"}
+        ]
+    },
+    "BVFS": {
+        name: "Business Valuation Using Financial Statements",
+        summary: "Applied course combining finance and accounting, focusing on frameworks for value creation and understanding key drivers of firm value.",
+        faculty: "Rishabh Aggarwal",
+        majors: ["FINC", "ENTR"],
+        prerequisites: "None",
+        group_requirements: "Maximum of 4 members per group, no restrictions on composition",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class participation", weight: "10%"},
+            {component: "Individual assignments (3)", weight: "45%"},
+            {component: "Group assignments (2)", weight: "20%"},
+            {component: "Final Valuation Project", weight: "25%"}
+        ]
+    },
+    "CEOP": {
+        name: "CEO Perspectives",
+        summary: "Provides insights from CEO perspective on business challenges and value chain management.",
+        faculty: "Doreswamy Nandkishore",
+        majors: ["MKTG"],
+        prerequisites: "Core courses should be completed",
+        group_requirements: "5-6 members per team",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class participation", weight: "25%"},
+            {component: "Reflection Paper", weight: "37.5%"},
+            {component: "Project Work", weight: "37.5%"}
+        ]
+    },
+    "CMGT": {
+        name: "Change Management",
+        summary: "Focuses on understanding why change management initiatives fail and how to become effective at managing and leading change.",
+        faculty: "Saumya Sindhwani",
+        majors: ["STLD", "PBPL"],
+        prerequisites: "None",
+        group_requirements: "5-6 individuals per group, no cross-section groups",
+        attendance: "Come to class only if interested in contributing to class learning",
+        evaluation: [
+            {component: "Class Participation", weight: "15%"},
+            {component: "In-Class Case Analysis", weight: "30%"},
+            {component: "Simulation", weight: "30%"},
+            {component: "Individual Reflective Essay", weight: "15%"},
+            {component: "Belbin Assessment", weight: "10%"}
+        ]
+    },
+    "COBE": {
+        name: "Consumer Behavior",
+        summary: "Focuses on understanding human behavior in the marketplace and using behavioral science research for customer insights.",
+        faculty: "Rajesh Bhargave, Amitav Chakravarti",
+        majors: ["MKTG"],
+        prerequisites: "None",
+        group_requirements: "5-7 people within same section",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Attendance & Participation", weight: "20%"},
+            {component: "Individual Assignments", weight: "40%"},
+            {component: "Group Project Presentation", weight: "5%"},
+            {component: "Group Project Final Report", weight: "35%"}
+        ]
+    },
+    "DAFN": {
+        name: "Data Analytics in Finance",
+        summary: "Introduces econometric and quantitative techniques for finance and algorithms based on big data.",
+        faculty: "Seoyoung Kim",
+        majors: ["FINC"],
+        prerequisites: "R programming knowledge helpful but not required",
+        group_requirements: "3 to 5 students",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Data-driven group HWs (2)", weight: "40%"},
+            {component: "Exams (2)", weight: "60%"}
+        ]
+    },
+    "DSDP": {
+        name: "Data-Driven Strategies for Digital Platforms",
+        summary: "Focuses on digital platform strategy and how to strategically translate data into value.",
+        faculty: "Yael Inbar, Sagit Bar-Gill",
+        majors: ["INTM", "ENTR", "STLD"],
+        prerequisites: "None",
+        group_requirements: "5-7 people per group",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Attendance & Participation", weight: "20%"},
+            {component: "Individual Mini-assignments (2)", weight: "30%"},
+            {component: "Group Project", weight: "30%"},
+            {component: "In-Class Group Activities", weight: "20%"}
+        ]
+    },
+    "DTME2": {
+        name: "Digital Transformation and Manufacturing Ecosystem",
+        summary: "Three-term course focused on digital transformation in manufacturing, combining classroom learning with live Action Learning Projects.",
+        faculty: "Chandan Chowdhury",
+        majors: ["MANF", "OPMT", "INTM"],
+        prerequisites: "None",
+        group_requirements: "Project-based groups over three terms",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class participation", weight: "25%"},
+            {component: "Industry interactions", weight: "20%"},
+            {component: "Class test", weight: "25%"},
+            {component: "Action Learning Project", weight: "30%"}
+        ]
+    },
+    "ENTR": {
+        name: "Entrepreneurship",
+        summary: "Focuses on developing entrepreneurial thinking and validating innovative ideas scientifically.",
+        faculty: "Anusha Sirigiri",
+        majors: ["ENTR"],
+        prerequisites: "None",
+        group_requirements: "Maximum 5-6 members per team",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class Participation & Quizzes", weight: "20%"},
+            {component: "Individual Exploratory Reports", weight: "30%"},
+            {component: "Group Components", weight: "20%"},
+            {component: "Team Venture Project", weight: "30%"}
+        ]
+    },
+     "FCAS": {
+        name: "Forecasting Analytics",
+        summary: "Provides hands-on experience with popular forecasting techniques and best practices for building forecasting solutions.",
+        faculty: "Rajib Saha",
+        majors: ["INTM", "MANF", "OPMT", "INSR"],
+        prerequisites: "None",
+        group_requirements: "5-6 students, student-chosen, diverse groups encouraged",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Individual assignments (3)", weight: "60%"},
+            {component: "Midterm project proposal", weight: "8%"},
+            {component: "Team Project Report", weight: "17%"},
+            {component: "Team Presentation", weight: "5%"},
+            {component: "Peer Evaluation", weight: "3%"},
+            {component: "Team Meets Instructor", weight: "2%"}
+        ]
+    },
+        "GPGP": {
+        name: "Going Public, Going Private",
+        summary: "Advanced corporate finance course focusing on firms' interface with financial markets and financing strategies at different life cycle stages.",
+        faculty: "Jash Jain",
+        majors: ["FINC", "ENTR", "STLD"],
+        prerequisites: "Core finance courses",
+        group_requirements: "Maximum 4 students per group",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Post-Class Case Write-Ups (Group)", weight: "40%"},
+            {component: "Post-Class Case Write-Up (Individual)", weight: "10%"},
+            {component: "Pre-Class Case Write-Up", weight: "10%"},
+            {component: "Assignment", weight: "15%"},
+            {component: "Pop Quizzes", weight: "10%"},
+            {component: "Participation", weight: "15%"}
+        ]
+    },
+     "IDTF": {
+        name: "Intro to FinTech",
+        summary: "Introduction to financial technology innovations disrupting traditional finance, covering blockchain, digital currencies, and alternative financing.",
+        faculty: "Seoyoung Kim",
+        majors: ["FINC"],
+        prerequisites: "None",
+        group_requirements: "5-6 students per group",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Group Projects with live defense (2)", weight: "50%"},
+            {component: "Individual Assignments (2)", weight: "40%"},
+            {component: "Peer Evaluations", weight: "10%"}
+        ]
+    },
+    "INTF": {
+        name: "International Finance",
+        summary: "Comprehensive coverage of micro and macro issues in international finance, preparing students for roles in global investment and banking.",
+        faculty: "Apoorva Javadekar",
+        majors: ["FINC"],
+        prerequisites: "None",
+        group_requirements: "Not specified",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Final Exam", weight: "50%"},
+            {component: "Case Submission", weight: "20%"},
+            {component: "Data Assignment", weight: "30%"}
+        ]
+    },
+     "LOES": {
+        name: "Leveraging Operations for Environmental and Social Sustainability",
+        summary: "Explores managerial decision-making at the interface between firms' operations and environment/society.",
+        faculty: "Aditya Vedantam",
+        majors: ["OPMT", "MANF"],
+        prerequisites: "None",
+        group_requirements: "Group size TBD after final enrollment, diversity preferred",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Case Preparation (Best 3 of 4)", weight: "30%"},
+            {component: "Group Discussion of Media Articles", weight: "20%"},
+            {component: "Personal Reflection", weight: "25%"},
+            {component: "Class Participation", weight: "25%"}
+        ]
+    },
+     "MFIN": {
+        name: "Microfinance",
+        summary: "Provides management and technical skills for developing social enterprises and preparing leaders for microfinance organizations.",
+        faculty: "Shagata Mukherjee",
+        majors: ["FINC", "ENTR", "PBPL"],
+        prerequisites: "None",
+        group_requirements: "Small groups for project work",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Attendance and Punctuality", weight: "10%"},
+            {component: "Class Participation", weight: "10%"},
+            {component: "Midterm Exam", weight: "30%"},
+            {component: "Group Project Report", weight: "30%"},
+            {component: "Group Project Presentation", weight: "20%"}
+        ]
+    },
+
+
+    // [Previous courses continued...]
+    "MKSP": {
+        name: "Marketing for a Sustainable Planet",
+        summary: "Examines sustainability from business and firm perspective, incorporating aspects of business strategy, finance, operations, and marketing.",
+        faculty: "D.V.R. Seshadri",
+        majors: ["MKTG"],
+        prerequisites: "None",
+        group_requirements: "Teams of 5-6 students, random selection",
+        attendance: "Standard ISB policy with grade penalties",
+        evaluation: [
+            {component: "Class participation", weight: "16%"},
+            {component: "Quizzes (Best 7 of 8)", weight: "56%"},
+            {component: "Theatre Grand Finale", weight: "28%"}
+        ]
+    },
+    "MKSV": {
+        name: "Marketing Services",
+        summary: "Comprehensive course covering service strategies and building world-class service firms.",
+        faculty: "Piyush Kumar",
+        majors: ["MKTG", "HCMG"],
+        prerequisites: "None",
+        group_requirements: "4-5 students per group",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class participation", weight: "20%"},
+            {component: "Group Project", weight: "30%"},
+            {component: "Service Simulation", weight: "15%"},
+            {component: "Case submission", weight: "35%"}
+        ]
+    },
+    "MKTS": {
+        name: "Marketing Strategy",
+        summary: "Focuses on developing marketing strategy as foundation for business competition and alignment with overall business strategy.",
+        faculty: "Piyush Kumar",
+        majors: ["MKTG", "STLD"],
+        prerequisites: "Marketing Management and Marketing Decision-Making",
+        group_requirements: "Not explicitly specified",
+        attendance: "Standard ISB attendance policy with grade penalties",
+        evaluation: [
+            {component: "Class participation", weight: "20%"},
+            {component: "Group Project", weight: "30%"},
+            {component: "Account-based Marketing Simulation", weight: "15%"},
+            {component: "Case submission", weight: "35%"}
+        ]
+    },
+    "PRRA": {
+        name: "Pricing and Revenue Analytics",
+        summary: "Focuses on how firms should set and update pricing and product availability decisions across selling channels to maximize profitability.",
+        faculty: "Abhishek Deshmane, Sumit Kunnumkal",
+        majors: ["OPMT", "MANF", "INTM"],
+        prerequisites: "Understanding of optimization modeling and probability concepts desirable",
+        group_requirements: "4-5 students per group",
+        attendance: "Expected and punctuality assumed",
+        evaluation: [
+            {component: "Homeworks (3)", weight: "25%"},
+            {component: "Project", weight: "25%"},
+            {component: "Class Participation", weight: "15%"},
+            {component: "Exam", weight: "35%"}
+        ]
+    },
+    "STRI": {
+        name: "Strategy Implementation",
+        summary: "Addresses critical organizational challenges associated with implementing various strategic priorities.",
+        faculty: "Anusha Sirigiri",
+        majors: ["STLD"],
+        prerequisites: "None",
+        group_requirements: "8 students per group, within same section",
+        attendance: "No compulsory attendance",
+        evaluation: [
+            {component: "Class Contribution", weight: "20%"},
+            {component: "Individual Case Write-ups", weight: "30%"},
+            {component: "Group Case Write-up", weight: "20%"},
+            {component: "Group Project", weight: "30%"}
+        ]
+    },
+
+    "TBOF": {
+        name: "The Business of Food",
+        summary: "Explores the economic, cultural, and ethical dimensions of the global food industry.",
+        faculty: "Anjal Prakash",
+        majors: ["PBPL"],
+        prerequisites: "None",
+        group_requirements: "Not explicitly specified",
+        attendance: "Standard ISB attendance policy",
+        evaluation: [
+            {component: "Class participation", weight: "20%"},
+            {component: "Quizzes (6 activities)", weight: "48%"},
+            {component: "Simulation", weight: "10%"},
+            {component: "Individual Reflection", weight: "22%"}
+        ]
+    }
+};
+
+// Initialize course selection and filtering
+document.addEventListener('DOMContentLoaded', function() {
+    const concentrationSelect = document.getElementById('concentrationSelect');
+    const course1Select = document.getElementById('course1');
+    const course2Select = document.getElementById('course2');
+    
+    concentrationSelect.addEventListener('change', filterCourses);
+    course1Select.addEventListener('change', () => updateComparison('1'));
+    course2Select.addEventListener('change', () => updateComparison('2'));
+    
+    populateCoursesDropdown();
+});
+
+function populateCoursesDropdown() {
+    const courses = Object.entries(courseData);
+    const course1Select = document.getElementById('course1');
+    const course2Select = document.getElementById('course2');
+    
+    course1Select.innerHTML = '<option value="">Select first course</option>';
+    course2Select.innerHTML = '<option value="">Select second course</option>';
+    
+    courses.forEach(([code, course]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = `${course.name} (${code})`;
+        
+        course1Select.appendChild(option.cloneNode(true));
+        course2Select.appendChild(option);
+    });
+}
+
+function filterCourses() {
+    const concentration = document.getElementById('concentrationSelect').value;
+    const courses = Object.entries(courseData).filter(([_, course]) => 
+        !concentration || course.majors.includes(concentration)
+    );
+    
+    const course1Select = document.getElementById('course1');
+    const course2Select = document.getElementById('course2');
+    
+    const selected1 = course1Select.value;
+    const selected2 = course2Select.value;
+    
+    course1Select.innerHTML = '<option value="">Select first course</option>';
+    course2Select.innerHTML = '<option value="">Select second course</option>';
+    
+    courses.forEach(([code, course]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = `${course.name} (${code})`;
+        
+        course1Select.appendChild(option.cloneNode(true));
+        course2Select.appendChild(option);
+    });
+    
+    if (courses.some(([code]) => code === selected1)) course1Select.value = selected1;
+    if (courses.some(([code]) => code === selected2)) course2Select.value = selected2;
+}
+function filterCourses() {
+    const concentration = document.getElementById('concentrationSelect').value;
+    const noExams = document.getElementById('noExams').checked;
+    const noCP = document.getElementById('noCP').checked;
+    const noGroup = document.getElementById('noGroup').checked;
+    
+    const courses = Object.entries(courseData).filter(([_, course]) => {
+        // Check concentration filter
+        if (concentration && !course.majors.includes(concentration)) return false;
+        
+        // Check evaluation criteria filters
+        const evalComponents = course.evaluation.map(e => e.component.toLowerCase());
+        
+        if (noExams && evalComponents.some(e => 
+            e.includes('exam') || e.includes('mid-term') || e.includes('midterm') || 
+            e.includes('end-term') || e.includes('final'))) return false;
+            
+        if (noCP && evalComponents.some(e => 
+            e.includes('participation') || e.includes('cp'))) return false;
+            
+        if (noGroup && evalComponents.some(e => 
+            e.includes('group') || e.includes('team'))) return false;
+        
+        return true;
+    });
+    
+    // Update dropdowns with filtered courses
+    const course1Select = document.getElementById('course1');
+    const course2Select = document.getElementById('course2');
+    
+    // Preserve selected values
+    const selected1 = course1Select.value;
+    const selected2 = course2Select.value;
+    
+    // Clear and repopulate dropdowns
+    course1Select.innerHTML = '<option value="">Select first course</option>';
+    course2Select.innerHTML = '<option value="">Select second course</option>';
+    
+    courses.forEach(([code, course]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = `${course.name} (${code})`;
+        
+        course1Select.appendChild(option.cloneNode(true));
+        course2Select.appendChild(option);
+    });
+    
+    // Restore selections if still valid
+    if (courses.some(([code]) => code === selected1)) course1Select.value = selected1;
+    if (courses.some(([code]) => code === selected2)) course2Select.value = selected2;
+}
+
+// Add event listeners for the new checkboxes
+document.getElementById('noExams').addEventListener('change', filterCourses);
+document.getElementById('noCP').addEventListener('change', filterCourses);
+document.getElementById('noGroup').addEventListener('change', filterCourses);
+function updateComparison(index) {
+    const course = document.getElementById(`course${index}`).value;
+    const data = courseData[course];
+    if (data) {
+        document.getElementById(`summary${index}`).textContent = data.summary;
+        document.getElementById(`faculty${index}`).textContent = data.faculty;
+        document.getElementById(`majors${index}`).textContent = data.majors.join(', ');
+        document.getElementById(`prerequisites${index}`).textContent = data.prerequisites;
+        document.getElementById(`group${index}`).textContent = data.group_requirements;
+        document.getElementById(`attendance${index}`).textContent = data.attendance;
+        
+        const evalList = document.getElementById(`evaluation${index}`);
+        evalList.innerHTML = '';
+        data.evaluation.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.component}: ${item.weight}`;
+            evalList.appendChild(li);
+        });
+    }
+}
+</script>
+
+</body>
+</html>
